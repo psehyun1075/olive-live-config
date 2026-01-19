@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: order-worker
+  namespace: olive-dev
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::065227443107:role/olive-dev-irsa-order-worker
