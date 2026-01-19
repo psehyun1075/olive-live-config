@@ -15,6 +15,7 @@ spec:
       labels:
         app: order-worker
     spec:
+      serviceAccountName: order-worker
       containers:
         - name: order-worker
           image: busybox:1.36
@@ -26,6 +27,11 @@ spec:
                 date;
                 sleep 10;
               done
+          env:
+            - name: AWS_REGION
+              value: ap-northeast-2
+            - name: ORDER_QUEUE_URL
+              value: "https://sqs.ap-northeast-2.amazonaws.com/065227443107/olive-dev-order-queue"
           resources:
             requests:
               cpu: 10m
