@@ -5,14 +5,34 @@ metadata:
   namespace: olive-dev
   annotations:
     kubernetes.io/ingress.class: alb
+
+    # 인터넷에서 접근 가능하게 (프론트 붙일 거라면 보통 internet-facing)
     alb.ingress.kubernetes.io/scheme: internet-facing
+
+    # Pod로 직접 붙이기 (EKS에서 일반적으로 ip 권장)
     alb.ingress.kubernetes.io/target-type: ip
+
+    # 리스너: HTTP 80
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+
+    # 헬스체크
+    alb.ingress.kubernetes.io/healthcheck-path: /healthz
+    alb.ingress.kubernetes.io/success-codes: "200"
+
+    # (선택) 과제/테스트용으로 누구나 접속 가능. 제한하고 싶으면 아래 주석 해제 후 네 IP로 제한
+    # alb.ingress.kubernetes.io/inbound-cidrs: "YOUR_PUBLIC_IP/32"
 spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /orders
+            pathType: Prefix
+            backend:
+              service:
+                name: order-api
+                port:
+                  number: 80
+          - path: /healthz
             pathType: Prefix
             backend:
               service:
