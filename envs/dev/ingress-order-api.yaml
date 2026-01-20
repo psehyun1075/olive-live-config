@@ -25,28 +25,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /orders
-            pathType: Prefix
-            backend:
-              service:
-                name: order-api
-                port:
-                  number: 80
-          - path: /healthz
-            pathType: Prefix
-            backend:
-              service:
-                name: order-api
-                port:
-                  number: 80
-          - path: /api/orders
-            pathType: Prefix
-            backend:
-              service:
-                name: order-api
-                port:
-                  number: 80
-          - path: /api/healthz
+          - path: /api
             pathType: Prefix
             backend:
               service:
