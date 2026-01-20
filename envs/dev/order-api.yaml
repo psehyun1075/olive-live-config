@@ -23,7 +23,7 @@ spec:
       serviceAccountName: order-api
       containers:
         - name: order-api
-          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260120-145911
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260120-232514
           ports:
             - containerPort: 8080
           env:
@@ -33,6 +33,8 @@ spec:
               value: "https://sqs.ap-northeast-2.amazonaws.com/065227443107/olive-dev-order-queue"
             - name: PORT
               value: "8080"
+            - name: ORIGIN_HEADER_VALUE
+              value: "olive-dev-only-9f3a2c"
           resources:
             requests:
               cpu: 50m
