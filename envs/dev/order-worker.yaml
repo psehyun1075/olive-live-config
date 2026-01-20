@@ -18,24 +18,22 @@ spec:
       serviceAccountName: order-worker
       containers:
         - name: order-worker
-          image: busybox:1.36
-          command: ["sh", "-c"]
-          args:
-            - |
-              echo "[worker] started";
-              while true; do
-                date;
-                sleep 10;
-              done
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:20260119-01
           env:
             - name: AWS_REGION
               value: ap-northeast-2
             - name: ORDER_QUEUE_URL
               value: "https://sqs.ap-northeast-2.amazonaws.com/065227443107/olive-dev-order-queue"
+            - name: WAIT_TIME_SECONDS
+              value: "20"
+            - name: MAX_NUMBER_OF_MESSAGES
+              value: "5"
+            - name: VISIBILITY_TIMEOUT
+              value: "60"
           resources:
             requests:
               cpu: 10m
-              memory: 32Mi
-            limits:
-              cpu: 50m
               memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
