@@ -20,4 +20,4 @@ spec:
         queueURL: "https://sqs.ap-northeast-2.amazonaws.com/065227443107/olive-dev-order-queue"
         awsRegion: "ap-northeast-2"
         queueLength: "5"
-
+        identityOwner: operator
