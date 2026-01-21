@@ -16,7 +16,7 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
 
     # 헬스체크
-    alb.ingress.kubernetes.io/healthcheck-path: /__no_such_path__
+    alb.ingress.kubernetes.io/healthcheck-path: /healthz
     alb.ingress.kubernetes.io/success-codes: "200"
 
     # (선택) 과제/테스트용으로 누구나 접속 가능. 제한하고 싶으면 아래 주석 해제 후 네 IP로 제한
