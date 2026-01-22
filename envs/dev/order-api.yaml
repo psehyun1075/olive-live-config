@@ -23,7 +23,7 @@ spec:
       serviceAccountName: order-api
       containers:
         - name: order-api
-          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260122-111643
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260122-153731
           ports:
             - containerPort: 8080
           envFrom:
