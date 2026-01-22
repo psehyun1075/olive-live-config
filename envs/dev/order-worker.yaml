@@ -18,7 +18,7 @@ spec:
       serviceAccountName: order-worker
       containers:
         - name: order-worker
-          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:dev-20260122-105944
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:dev-20260122-124044
           envFrom:
             - secretRef:
                 name: aurora-cred
