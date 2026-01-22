@@ -23,9 +23,12 @@ spec:
       serviceAccountName: order-api
       containers:
         - name: order-api
-          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260120-232514
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260122-111643
           ports:
             - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: aurora-cred
           env:
             - name: AWS_REGION
               value: ap-northeast-2
