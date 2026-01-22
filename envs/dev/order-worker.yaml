@@ -18,7 +18,10 @@ spec:
       serviceAccountName: order-worker
       containers:
         - name: order-worker
-          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:20260119-01
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:dev-20260122-100451
+          envFrom:
+            - secretRef:
+                name: aurora-cred
           env:
             - name: AWS_REGION
               value: ap-northeast-2
