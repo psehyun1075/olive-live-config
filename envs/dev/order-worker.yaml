@@ -18,11 +18,29 @@ spec:
       serviceAccountName: order-worker
       containers:
         - name: order-worker
-          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:dev-20260122-140206
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:dev-20260123-080337
           envFrom:
             - secretRef:
                 name: aurora-cred
           env:
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_TRACE_AGENT_PORT
+              value: "8126"
+
+            - name: DD_SERVICE
+              value: "order-worker"
+            - name: DD_ENV
+              value: "dev"
+            - name: DD_VERSION
+              value: "1.0.0"
+
+            - name: DD_LOGS_INJECTION
+              value: "true"
+            - name: DD_TRACE_SAMPLE_RATE
+              value: "1"
             - name: AWS_REGION
               value: ap-northeast-2
             - name: ORDER_QUEUE_URL
