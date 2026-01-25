@@ -18,7 +18,7 @@ spec:
       serviceAccountName: order-worker
       containers:
         - name: order-worker
-          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:dev-20260123-080337
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-worker:dev-20260125-140214
           envFrom:
             - secretRef:
                 name: aurora-cred
@@ -41,16 +41,28 @@ spec:
               value: "true"
             - name: DD_TRACE_SAMPLE_RATE
               value: "1"
+
             - name: AWS_REGION
               value: ap-northeast-2
+
             - name: ORDER_QUEUE_URL
               value: "https://sqs.ap-northeast-2.amazonaws.com/065227443107/olive-dev-order-queue"
+
             - name: WAIT_TIME_SECONDS
               value: "20"
             - name: MAX_NUMBER_OF_MESSAGES
               value: "5"
             - name: VISIBILITY_TIMEOUT
               value: "60"
+
+            # ✅ DynamoDB serving counter (추가)
+            - name: SERVING_COUNTER_TABLE
+              value: "olive-dev-serving-counter"
+            - name: SERVING_COUNTER_ID
+              value: "event-001"
+            - name: SERVING_COUNTER_TTL_SECONDS
+              value: "86400"   # 운영은 1일 추천 (데모만 120으로 바꿔도 됨)
+
           resources:
             requests:
               cpu: 100m
