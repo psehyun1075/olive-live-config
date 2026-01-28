@@ -26,6 +26,25 @@ spec:
           image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260128-100113
           ports:
             - containerPort: 8080
+
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+        
           envFrom:
             - secretRef:
                 name: aurora-cred
