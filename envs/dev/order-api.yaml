@@ -23,7 +23,7 @@ spec:
       serviceAccountName: order-api
       containers:
         - name: order-api
-          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260128-164221
+          image: 065227443107.dkr.ecr.ap-northeast-2.amazonaws.com/olive/order-api:dev-20260128-171329
           ports:
             - containerPort: 8080
 
@@ -40,7 +40,7 @@ spec:
             httpGet:
               path: /healthz
               port: 8080
-            initialDelaySeconds: 20
+            initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 2
             failureThreshold: 3
