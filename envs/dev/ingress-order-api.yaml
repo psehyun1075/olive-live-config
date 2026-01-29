@@ -8,20 +8,17 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
 
-    # ✅ 80 + 443 선언 (이거 안 하면 443 계속 없어짐)
+    # 80 + 443
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
-
-    # ✅ (필수) ALB(서울) 인증서 ARN
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:065227443107:certificate/53a03c86-f248-4736-bfc2-5edd3faa315a
-
-    # ✅ HTTP -> HTTPS 리다이렉트
     alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/security-groups: sg-028d974f87ffb5ba0
 
-    # 헬스체크
+    # ✅ CloudFront Origin-facing Prefix List만 허용 (pl-22a6434b가 로그에 찍힌 그거)
+    alb.ingress.kubernetes.io/inbound-prefix-lists: "pl-22a6434b"
+
+    # healthcheck
     alb.ingress.kubernetes.io/healthcheck-path: /healthz
     alb.ingress.kubernetes.io/success-codes: "200"
-
 spec:
   rules:
     - http:
