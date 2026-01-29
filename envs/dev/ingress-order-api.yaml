@@ -13,8 +13,9 @@ metadata:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:065227443107:certificate/53a03c86-f248-4736-bfc2-5edd3faa315a
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 
-    # ✅ CloudFront Origin-facing Prefix List만 허용 (pl-22a6434b가 로그에 찍힌 그거)
-    alb.ingress.kubernetes.io/inbound-prefix-lists: "pl-22a6434b"
+    alb.ingress.kubernetes.io/security-groups: sg-09a9a0ae633728f70
+
+    alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true"
 
     # healthcheck
     alb.ingress.kubernetes.io/healthcheck-path: /healthz
