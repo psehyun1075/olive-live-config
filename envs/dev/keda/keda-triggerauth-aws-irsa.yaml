@@ -5,4 +5,4 @@ metadata:
   namespace: olive-dev
 spec:
   podIdentity:
-    provider: aws
+    provider: aws-eks
