@@ -1,0 +1,51 @@
+name: calendar-to-keda
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          pip install google-api-python-client google-auth
+
+      - name: Write service account json
+        run: |
+          echo "${{ secrets.GCAL_SA_JSON_B64 }}" | base64 -d > gcal-sa.json
+
+      - name: Run updater
+        env:
+          GCAL_CALENDAR_ID: 9fb480af21e9229e82b5fbe2343b590a70e4421994c832a74dc3000bb71ab422@group.calendar.google.com
+          GCAL_SA_JSON_PATH: gcal-sa.json
+          PREWARM_MINUTES: "10"
+          POSTWARM_MINUTES: "10"
+        run: |
+          python tools/calendar_to_keda.py
+          git status
+
+      - name: Commit & push if changed
+        run: |
+          if git diff --quiet; then
+            echo "no changes"
+            exit 0
+          fi
+          git config user.name "calendar-bot"
+          git config user.email "calendar-bot@users.noreply.github.com"
+          git add envs/dev/keda/*.yaml tools/calendar_to_keda.py
+          git commit -m "chore: update keda cron from calendar"
+          git push

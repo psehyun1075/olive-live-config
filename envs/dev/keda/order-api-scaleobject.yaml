@@ -1,0 +1,36 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: order-api-so
+  namespace: olive-dev
+spec:
+  scaleTargetRef:
+    name: order-api
+
+  minReplicaCount: 2
+  maxReplicaCount: 20
+
+  pollingInterval: 30
+  cooldownPeriod: 120
+
+  triggers:
+    # (1) CPU 기반
+    - type: cpu
+      metricType: Utilization
+      metadata:
+        value: "60"
+
+    # (2) Memory 기반
+    - type: memory
+      metricType: Utilization
+      metadata:
+        value: "70"
+
+    # BEGIN: calendar-managed-cron
+    - type: cron
+      metadata:
+        timezone: "Asia/Seoul"
+        start: "0 0 1 1 *"
+        end:   "1 0 1 1 *"
+        desiredReplicas: "2"
+    # END: calendar-managed-cron
